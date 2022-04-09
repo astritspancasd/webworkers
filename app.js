@@ -1,5 +1,3 @@
-const worker = new Worker("./worker.js");
-
 const DARK = "#000";
 const WHITE = "#fff";
 
@@ -13,10 +11,18 @@ document.getElementById("btn-theme-change").addEventListener("click", () => {
   defaultTheme = defaultTheme === DARK ? WHITE : DARK;
 });
 
-document.getElementById("btn-start-calculate").addEventListener("click", () => {
-  worker.postMessage("Start Calculation");
-});
+if (window.Worker) {
+  const worker = new Worker("./worker.js");
 
-worker.onmessage = (message) => {
-  console.log(message.data);
-};
+  document
+    .getElementById("btn-start-calculate")
+    .addEventListener("click", () => {
+      worker.postMessage("Start Calculation");
+    });
+
+  worker.onmessage = (event) => {
+    console.log(event.data);
+  };
+} else {
+  console.log("Your browser doesn't support web workers");
+}

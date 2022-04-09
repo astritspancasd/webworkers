@@ -1,8 +1,8 @@
-onmessage = (message) => {
-  console.log(message.data);
+onmessage = (event) => {
+  console.log(event.data);
 
   let sum = 0;
-  for (let i = 1; i < 100000000000; i++) {
+  for (let i = 1; i < 10000000000; i++) {
     sum += i;
   }
 
